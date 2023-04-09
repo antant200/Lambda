@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Main {
@@ -13,10 +13,20 @@ public class Main {
         persons.add(person2);
         persons.add(person3);
         persons.add(person4);
-        Collections.sort(persons, new PersonsComparator(7));
+        int maxSurnameLength = 6;
+        Comparator<Person> comparator = (Person p1, Person p2) -> {
+            if ((p1.surname.compareTo(p2.surname) > 0) && (p1.surname.length() <= maxSurnameLength)) {
+                return 1;
+            } else if ((p2.surname.compareTo(p1.surname) > 0) && (p2.surname.length() <= maxSurnameLength)) {
+                return -1;
+            } else {
+                return Integer.compare(p1.age, p2.age);
+            }
+        };
+        System.out.println("До изменения: ");
         System.out.println(persons);
-        Collections.sort(persons, new PersonsComparator(100)); //Если бы не было максимальной длины
+        System.out.println("С максимальной длиной: " + maxSurnameLength);
+        persons.sort(comparator);
         System.out.println(persons);
-
     }
 }
