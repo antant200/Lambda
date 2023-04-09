@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,10 +14,17 @@ public class Main {
         persons.add(person2);
         persons.add(person3);
         persons.add(person4);
-        Collections.sort(persons, new PersonsComparator(7));
+        Predicate<Person> personPredicate = (Person p1) -> {
+            if (p1.age < 18) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+        System.out.println("До изменений:");
         System.out.println(persons);
-        Collections.sort(persons, new PersonsComparator(100)); //Если бы не было максимальной длины
+        persons.removeIf(personPredicate);
+        System.out.println("После изменений:");
         System.out.println(persons);
-
     }
 }
